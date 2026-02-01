@@ -4,8 +4,10 @@
 export function getAuthToken() {
   return new Promise((resolve, reject) => {
     chrome.identity.getAuthToken({ 'interactive': true }, (token) => {
-      if (chrome.runtime.lastError) reject(chrome.runtime.lastError);
-      else resolve(token);
+      if (chrome.runtime.lastError) {
+        return reject(chrome.runtime.lastError);
+      }
+      resolve(token);
     });
   });
 }
@@ -16,6 +18,10 @@ async function getMessageDetails(messageId, token) {
     `https://gmail.googleapis.com/gmail/v1/users/me/messages/${messageId}`,
     { headers: { Authorization: `Bearer ${token}` } }
   );
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(`Gmail API error (getMessageDetails): ${response.status} ${response.statusText} - ${body}`);
+  }
   return await response.json();
 }
 
@@ -35,7 +41,12 @@ export async function scanForSubscriptions() {
       `https://gmail.googleapis.com/gmail/v1/users/me/messages?q=${encodeURIComponent(query)}&maxResults=50`, 
       { headers: { Authorization: `Bearer ${token}` } }
     );
-    
+
+    if (!response.ok) {
+      const body = await response.text();
+      throw new Error(`Gmail API error (search): ${response.status} ${response.statusText} - ${body}`);
+    }
+
     const data = await response.json();
 
     if (data.messages) {
@@ -45,7 +56,11 @@ export async function scanForSubscriptions() {
         if (uniqueSubs.size >= 20) break;
 
         const details = await getMessageDetails(message.id, token);
-        const headers = details.payload.headers;
+        const headers = (details && details.payload && Array.isArray(details.payload.headers))
+          ? details.payload.headers
+          : [];
+
+        if (headers.length === 0) continue;
 
         // Check if it's truly a subscription (has List-Unsubscribe header)
         const unsubHeader = headers.find(h => h.name === 'List-Unsubscribe');
@@ -83,6 +98,7 @@ export async function scanForSubscriptions() {
   } catch (error) {
     console.error(error);
     chrome.runtime.sendMessage({ type: 'LOG', data: `Error: ${error.message}` });
+    throw error;
   }
 
   // Return just the values as an array

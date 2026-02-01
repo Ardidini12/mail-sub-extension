@@ -11,26 +11,41 @@ document.addEventListener('DOMContentLoaded', () => {
     scanBtn.disabled = true;
     listContainer.innerHTML = ''; // Clear previous
 
-    // Run the scan
-    const subscriptions = await scanForSubscriptions();
+    try {
+      // Run the scan
+      const subscriptions = await scanForSubscriptions();
 
-    // Render results
-    if (subscriptions.length === 0) {
-        listContainer.innerHTML = '<div class="item">No active subscriptions found.</div>';
-    } else {
+      // Render results
+      if (!subscriptions || subscriptions.length === 0) {
+        const div = document.createElement('div');
+        div.className = 'item';
+        div.textContent = 'No active subscriptions found.';
+        listContainer.appendChild(div);
+      } else {
         subscriptions.forEach(sub => {
-            const div = document.createElement('div');
-            div.className = 'item';
-            div.innerHTML = `
-                <div class="sender">${sub.name}</div>
-                <div class="subject">${sub.subject}</div>
-            `;
-            listContainer.appendChild(div);
-        });
-    }
+          const div = document.createElement('div');
+          div.className = 'item';
 
-    // Reset Button
-    scanBtn.textContent = 'Scan Inbox';
-    scanBtn.disabled = false;
+          const senderEl = document.createElement('div');
+          senderEl.className = 'sender';
+          senderEl.textContent = sub.name;
+
+          const subjectEl = document.createElement('div');
+          subjectEl.className = 'subject';
+          subjectEl.textContent = sub.subject;
+
+          div.appendChild(senderEl);
+          div.appendChild(subjectEl);
+          listContainer.appendChild(div);
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      listContainer.innerHTML = '<div class="item">Error scanning inbox. Please try again.</div>';
+    } finally {
+      // Reset Button
+      scanBtn.textContent = 'Scan Inbox';
+      scanBtn.disabled = false;
+    }
   });
 });
