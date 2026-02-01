@@ -1,0 +1,12 @@
+Chrome extensions are a bit different. They rely on a file called manifest.json.
+
+Think of the manifest.json as the extension's passport. It tells the browser:
+
+-Who the extension is (Name, Version).
+
+-Where it wants to go (Permissions).
+
+-What scripts it needs to run.
+
+We need to explicitly ask the user for permission to read their email data.
+

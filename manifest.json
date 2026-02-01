@@ -1,10 +1,27 @@
 {
-  "name": "Hello Extensions",
-  "description": "Base Level Extension",
+  "name": "Inbox Unsubscribe Manager",
+  "description": "Manage your email subscriptions with ease",
   "version": "1.0",
   "manifest_version": 3,
   "action": {
-    "default_popup": "hello.html",
+    "default_popup": "sidepanel.html",
     "default_icon": "hello_extensions.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "identity",
+    "sidePanel"
+  ],
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "oauth2": {
+    "client_id": "712079917136-o845a5a5difo6sf4qn5jpgm5d0al274a.apps.googleusercontent.com",
+    "scopes": [
+       "https://www.googleapis.com/auth/gmail.readonly"
+    ]
   }
 }
