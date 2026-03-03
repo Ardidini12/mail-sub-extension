@@ -11,7 +11,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     console.log('[Scan Complete]:', request.data);
     
     chrome.action.setBadgeText({ 
-      text: String(request.data.count || '') 
+      text: String(request.data?.count || '') 
     });
     chrome.action.setBadgeBackgroundColor({ 
       color: '#667eea' 

@@ -1,11 +1,11 @@
 export class Subscription {
-  constructor(data) {
-    this.id = data.id;
-    this.name = data.name;
-    this.email = data.email;
-    this.subject = data.subject;
-    this.unsubLink = data.unsubLink;
-    this.provider = data.provider;
+  constructor(data = {}) {
+    this.id = data.id || null;
+    this.name = data.name || 'Unknown';
+    this.email = data.email || '';
+    this.subject = data.subject || 'No Subject';
+    this.unsubLink = data.unsubLink || null;
+    this.provider = data.provider || 'unknown';
     this.scannedAt = data.scannedAt || Date.now();
   }
 
@@ -28,9 +28,10 @@ export class Subscription {
 
 export class SubscriptionList {
   constructor(subscriptions = []) {
-    this.subscriptions = subscriptions.map(sub => 
-      sub instanceof Subscription ? sub : new Subscription(sub)
-    );
+    const safeSubscriptions = Array.isArray(subscriptions) ? subscriptions : [];
+    this.subscriptions = safeSubscriptions
+      .filter(sub => sub && typeof sub === 'object')
+      .map(sub => sub instanceof Subscription ? sub : new Subscription(sub));
   }
 
   add(subscription) {
@@ -49,7 +50,7 @@ export class SubscriptionList {
   }
 
   getAll() {
-    return this.subscriptions;
+    return [...this.subscriptions];
   }
 
   getCount() {

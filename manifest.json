@@ -33,6 +33,6 @@
     "128": "assets/icons/icon128.png"
   },
   "host_permissions": [
-    "https://www.googleapis.com/*"
+    "https://gmail.googleapis.com/*"
   ]
 }

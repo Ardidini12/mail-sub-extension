@@ -14,6 +14,21 @@ const elements = {
   errorMessage: document.querySelector('.error-message')
 };
 
+function validateElements() {
+  const required = ['scanBtn', 'retryBtn', 'subList', 'resultsSection', 'errorState', 'errorMessage'];
+  for (const key of required) {
+    if (!elements[key]) {
+      console.error(`Critical element missing: ${key}`);
+      return false;
+    }
+  }
+  return true;
+}
+
+if (!validateElements()) {
+  console.error('Failed to initialize popup: missing required DOM elements');
+}
+
 function showLoading() {
   elements.scanBtn.disabled = true;
   elements.emptyState.style.display = 'none';
@@ -76,8 +91,27 @@ function createSubscriptionItem(sub) {
   
   const unsubLink = document.createElement('a');
   unsubLink.className = 'unsub-link';
-  unsubLink.href = sub.unsubLink;
-  unsubLink.target = '_blank';
+  
+  const isValidUrl = (url) => {
+    try {
+      const parsed = new URL(url);
+      return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+    } catch {
+      return false;
+    }
+  };
+  
+  if (sub.unsubLink && isValidUrl(sub.unsubLink)) {
+    unsubLink.href = sub.unsubLink;
+    unsubLink.target = '_blank';
+    unsubLink.rel = 'noopener noreferrer';
+  } else {
+    unsubLink.href = '#';
+    unsubLink.onclick = (e) => e.preventDefault();
+    unsubLink.style.opacity = '0.5';
+    unsubLink.style.cursor = 'not-allowed';
+  }
+  
   unsubLink.textContent = 'Unsubscribe →';
   unsubLink.title = 'Click to unsubscribe from ' + sub.name;
   
@@ -136,7 +170,12 @@ async function loadStoredSubscriptions() {
   }
 }
 
-elements.scanBtn.addEventListener('click', performScan);
-elements.retryBtn.addEventListener('click', performScan);
+if (elements.scanBtn) {
+  elements.scanBtn.addEventListener('click', performScan);
+}
+
+if (elements.retryBtn) {
+  elements.retryBtn.addEventListener('click', performScan);
+}
 
 loadStoredSubscriptions();
