@@ -1,0 +1,32 @@
+# Backend API Client Module
+
+## PURPOSE
+Client-side API layer for communicating with backend server.
+Handles all HTTP requests for user management, payments, and data sync.
+
+## CONTAINS
+- client.js: Base API client with auth headers
+- user.js: User account operations (register, login, profile)
+- payment.js: Payment processing (Stripe integration)
+- subscription.js: Sync subscription data with backend
+
+## RESPONSIBILITIES
+- Authenticate API requests with JWT tokens
+- Handle user registration and login
+- Process payment transactions
+- Track user's run count and payment status
+- Sync subscription data to backend
+- Handle API errors and retries
+
+## REFERENCES
+- Parent: /src/.windsurf
+- Root: /.windsurf
+- Connects to: /backend/* (server-side API)
+
+## RULES
+- Always include auth tokens in requests
+- Handle 401 (unauthorized) by refreshing token
+- Retry failed requests with exponential backoff
+- Never store sensitive data in localStorage
+- Use HTTPS only for API calls
+- Validate responses before using data

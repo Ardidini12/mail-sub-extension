@@ -1,0 +1,61 @@
+# Backend Models Module
+
+## PURPOSE
+Database schemas and data models.
+Defines structure for user data, payments, and subscriptions.
+
+## CONTAINS
+- User.js: User account model
+- Payment.js: Payment transaction model
+- Subscription.js: Email subscription model
+
+## USER MODEL SCHEMA
+```
+{
+  email: String (unique, required)
+  password: String (hashed, required)
+  createdAt: Date
+  hasPaid: Boolean (default: false)
+  paymentDate: Date
+  stripeCustomerId: String
+  runCount: Number (default: 0)
+}
+```
+
+## PAYMENT MODEL SCHEMA
+```
+{
+  userId: ObjectId (ref: User)
+  amount: Number (500 = $5.00)
+  currency: String (default: 'usd')
+  stripeSessionId: String
+  stripePaymentIntentId: String
+  status: String (pending, completed, failed)
+  createdAt: Date
+}
+```
+
+## SUBSCRIPTION MODEL SCHEMA
+```
+{
+  userId: ObjectId (ref: User)
+  senderName: String
+  senderEmail: String
+  subject: String
+  unsubscribeLink: String
+  provider: String (gmail, outlook, yahoo)
+  scannedAt: Date
+}
+```
+
+## REFERENCES
+- Parent: /backend/.windsurf
+- Root: /.windsurf
+- Used by: /backend/routes/*
+
+## RULES
+- Use Mongoose for MongoDB or Sequelize for PostgreSQL
+- Hash passwords with bcrypt before saving
+- Index frequently queried fields
+- Validate data at model level
+- Use timestamps for all models

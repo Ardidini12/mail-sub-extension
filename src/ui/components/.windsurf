@@ -1,0 +1,30 @@
+# UI Components Module
+
+## PURPOSE
+Reusable UI components used across different pages.
+Promotes consistency and reduces code duplication.
+
+## CONTAINS
+- SubscriptionCard.js: Individual subscription display card
+- Button.js: Reusable button component
+- Loader.js: Loading spinner component
+- ErrorMessage.js: Error display component
+- PaymentModal.js: Payment prompt modal
+
+## COMPONENT GUIDELINES
+- Each component should be self-contained
+- Accept props for customization
+- Follow consistent styling
+- Include proper accessibility attributes
+- Handle edge cases (empty states, errors)
+
+## REFERENCES
+- Parent: /src/ui/.windsurf
+- Root: /.windsurf
+- Used by: /src/ui/popup/*
+
+## RULES
+- Components must be reusable
+- No hardcoded data
+- Proper event handling
+- Responsive design

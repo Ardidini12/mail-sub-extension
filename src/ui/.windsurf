@@ -1,0 +1,39 @@
+# User Interface Module
+
+## PURPOSE
+All user-facing interface components and pages for the extension.
+Handles user interactions, displays data, and manages UI state.
+
+## STRUCTURE
+- /popup: Main popup window (popup.html, popup.js, popup.css)
+- /components: Reusable UI components
+- /styles: Shared CSS styles
+
+## CONTAINS
+- Popup window with scan button
+- Subscription list display with unsubscribe links
+- Authentication/login UI
+- Payment flow UI
+- Settings page
+- Loading states and error handling
+
+## RESPONSIBILITIES
+- Display scanned subscriptions
+- Show unsubscribe links clearly
+- Handle user authentication flow
+- Trigger payment process
+- Show free tier limits (5 subs)
+- Provide feedback for user actions
+
+## REFERENCES
+- Parent: /src/.windsurf
+- Root: /.windsurf
+- Uses: /src/core/* for business logic, /src/api/* for backend calls
+
+## RULES
+- Keep UI simple and intuitive
+- Show clear loading states
+- Display errors user-friendly
+- Make unsubscribe links prominent
+- Responsive design for different screen sizes
+- Accessibility (ARIA labels, keyboard navigation)

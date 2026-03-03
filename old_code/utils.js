@@ -25,6 +25,33 @@ async function getMessageDetails(messageId, token) {
   return await response.json();
 }
 
+// Helper: Parse List-Unsubscribe Header
+function parseUnsubscribeHeader(headerValue) {
+  if (!headerValue) return null;
+  
+  // Header usually looks like: <https://example.com/unsub>, <mailto:unsub@example.com>
+  // We want the http/https link.
+  
+  // Regex to capture content inside < >
+  const matches = headerValue.match(/<([^>]+)>/g);
+  
+  if (matches) {
+    for (const match of matches) {
+      const url = match.slice(1, -1); // remove < >
+      if (url.startsWith('http')) {
+        return url;
+      }
+    }
+  }
+  
+  // Fallback: strictly check if the whole string is a slightly malformed http link (rare but possible)
+  if (headerValue.startsWith('http')) {
+    return headerValue;
+  }
+
+  return null;
+}
+
 // 3. MAIN SCANNER
 export async function scanForSubscriptions() {
   const uniqueSubs = new Map(); // Used to remove duplicates
@@ -66,30 +93,34 @@ export async function scanForSubscriptions() {
         const unsubHeader = headers.find(h => h.name === 'List-Unsubscribe');
         
         if (unsubHeader) {
-          const fromHeader = headers.find(h => h.name === 'From');
-          const subjectHeader = headers.find(h => h.name === 'Subject');
-          
-          // clean up sender name
-          const rawFrom = fromHeader ? fromHeader.value : 'Unknown';
-          const senderName = rawFrom.split('<')[0].trim().replace(/"/g, '');
-          const senderEmail = rawFrom.match(/<(.*)>/)?.[1] || rawFrom;
+          const unsubLink = parseUnsubscribeHeader(unsubHeader.value);
 
-          // DEDUPLICATION: Only process if we haven't seen this sender yet
-          if (!uniqueSubs.has(senderName)) {
+          if (unsubLink) {
+            const fromHeader = headers.find(h => h.name === 'From');
+            const subjectHeader = headers.find(h => h.name === 'Subject');
             
-            const subObject = {
-              id: message.id,
-              name: senderName,
-              email: senderEmail,
-              subject: subjectHeader ? subjectHeader.value : 'No Subject',
-              unsubLinks: unsubHeader.value
-            };
+            // clean up sender name
+            const rawFrom = fromHeader ? fromHeader.value : 'Unknown';
+            const senderName = rawFrom.split('<')[0].trim().replace(/"/g, '');
+            const senderEmail = rawFrom.match(/<(.*)>/)?.[1] || rawFrom;
 
-            // Send FULL object to background console
-            chrome.runtime.sendMessage({ type: 'LOG', data: subObject });
+            // DEDUPLICATION: Only process if we haven't seen this sender yet
+            if (!uniqueSubs.has(senderName)) {
+              
+              const subObject = {
+                id: message.id,
+                name: senderName,
+                email: senderEmail,
+                subject: subjectHeader ? subjectHeader.value : 'No Subject',
+                unsubLink: unsubLink // Use parsed link
+              };
 
-            // Add to our list
-            uniqueSubs.set(senderName, subObject);
+              // Send FULL object to background console
+              chrome.runtime.sendMessage({ type: 'LOG', data: subObject });
+
+              // Add to our list
+              uniqueSubs.set(senderName, subObject);
+            }
           }
         }
       }

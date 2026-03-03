@@ -1,0 +1,45 @@
+# Backend Routes Module
+
+## PURPOSE
+API endpoint definitions and request handlers.
+Defines all REST API routes for the application.
+
+## CONTAINS
+- auth.js: Authentication routes (register, login, logout)
+- user.js: User profile and settings routes
+- payment.js: Payment processing routes (Stripe webhooks)
+- subscription.js: Subscription data CRUD operations
+
+## ROUTE STRUCTURE
+### Auth Routes
+- POST /api/auth/register - Create new user account
+- POST /api/auth/login - User login, return JWT
+- POST /api/auth/logout - Invalidate token
+- POST /api/auth/refresh - Refresh JWT token
+
+### User Routes
+- GET /api/user/profile - Get user profile
+- PUT /api/user/profile - Update user profile
+- GET /api/user/status - Get payment status and run count
+
+### Payment Routes
+- POST /api/payment/create-checkout - Create Stripe checkout session
+- POST /api/payment/webhook - Handle Stripe webhooks
+- GET /api/payment/verify - Verify payment status
+
+### Subscription Routes
+- POST /api/subscriptions - Save scanned subscriptions
+- GET /api/subscriptions - Get user's subscriptions
+- DELETE /api/subscriptions/:id - Remove subscription
+
+## REFERENCES
+- Parent: /backend/.windsurf
+- Root: /.windsurf
+- Uses: /backend/models/*, /backend/middleware/*
+
+## RULES
+- All routes except auth must require authentication
+- Validate request bodies with middleware
+- Return consistent error responses
+- Use proper HTTP status codes
+- Implement rate limiting on sensitive endpoints

@@ -1,0 +1,36 @@
+# Email Provider Adapters Module
+
+## PURPOSE
+Contains email provider-specific implementations (Gmail, Outlook, Yahoo).
+Each provider follows the same interface for consistency.
+
+## CONTAINS
+- gmail.js: Gmail API integration
+- outlook.js: Outlook/Hotmail integration (future)
+- yahoo.js: Yahoo Mail integration (future)
+- base-provider.js: Abstract base class/interface
+
+## RESPONSIBILITIES
+- Implement provider-specific authentication
+- Fetch emails using provider APIs
+- Parse provider-specific email formats
+- Extract subscription data and unsubscribe links
+- Handle provider-specific rate limits and errors
+
+## INTERFACE REQUIREMENTS
+Each provider must implement:
+- authenticate(): Promise<token>
+- searchEmails(query): Promise<emails[]>
+- getEmailDetails(emailId): Promise<emailData>
+- extractUnsubscribeLink(email): string|null
+
+## REFERENCES
+- Parent: /src/.windsurf
+- Root: /.windsurf
+- Used by: /src/core/scanner.js
+
+## RULES
+- All providers must implement the same interface
+- Provider-specific logic stays in this module only
+- Use OAuth2 for authentication where possible
+- Handle API errors and rate limits gracefully

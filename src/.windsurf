@@ -1,0 +1,30 @@
+# Frontend Extension Module
+
+## PURPOSE
+Contains all client-side extension code that runs in the browser.
+Handles UI, email scanning, authentication, and communication with backend API.
+
+## STRUCTURE
+- /core: Platform-agnostic business logic
+- /providers: Email provider implementations (Gmail, Outlook, Yahoo)
+- /ui: User interface components and pages
+- /background: Service worker for background tasks
+- /api: Client-side API communication layer
+
+## RESPONSIBILITIES
+- Scan user's email inbox for subscriptions
+- Display subscriptions with unsubscribe links
+- Handle user authentication flow
+- Enforce free tier limits (5 subs) before payment
+- Communicate with backend for user/payment data
+- Cross-browser compatibility
+
+## REFERENCES
+- Parent: /.windsurf (root context)
+- Modules: /src/core/.windsurf, /src/providers/.windsurf, /src/ui/.windsurf
+
+## RULES
+- Keep code browser-agnostic (use WebExtension APIs)
+- No hardcoded API keys or secrets
+- All provider implementations must follow same interface
+- UI must be responsive and accessible

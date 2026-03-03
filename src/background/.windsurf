@@ -1,0 +1,28 @@
+# Background Service Worker Module
+
+## PURPOSE
+Background script that runs independently of UI.
+Handles long-running tasks, message passing, and background operations.
+
+## CONTAINS
+- service-worker.js: Main background service worker
+
+## RESPONSIBILITIES
+- Listen for extension events (install, update)
+- Handle message passing between UI and background
+- Manage authentication state
+- Coordinate background scans if needed
+- Handle alarms and scheduled tasks
+- Manage extension lifecycle
+
+## REFERENCES
+- Parent: /src/.windsurf
+- Root: /.windsurf
+- Communicates with: /src/ui/*, /src/core/*
+
+## RULES
+- Keep service worker lightweight
+- Use message passing for UI communication
+- Handle service worker lifecycle (can be terminated anytime)
+- Store state in chrome.storage, not memory
+- Minimize API calls from background
