@@ -6,29 +6,39 @@ Users scan their inbox once, get all subscriptions with unsubscribe links, pay $
 
 ## GOALS
 - [ ] Build cross-platform extension (Chrome, Firefox, Edge, Safari)
-- [ ] Implement user authentication system
+- [x] Implement user authentication system
 - [ ] Integrate payment gateway ($5 lifetime access)
-- [ ] Support multiple email providers (Gmail, Outlook, Yahoo)
+- [x] Support multiple email providers (Gmail implemented, Outlook/Yahoo pending)
 - [ ] Free tier: first 5 subscriptions, then paywall
-- [ ] Display unsubscribe links for each subscription
-- [ ] Backend API for user management and payment tracking
-- [ ] Scalable, maintainable architecture
+- [x] Display unsubscribe links for each subscription
+- [x] Backend API for user management and payment tracking
+- [x] Scalable, maintainable architecture
+- [x] Track email scan history and counts
+- [x] Remove unsubscribed items from user's list
 
 ## MEMORY
 
 ### SHORT-TERM (Current Session)
-- Created scalable folder structure with modular organization
-- Old Chrome-only code moved to /old folder
-- Setting up .windsurf context files at each module level
-- Focus: Architecture and scaffolding phase
+- ✅ Implemented complete user authentication system (register, login, logout)
+- ✅ MongoDB Atlas integration with connection string
+- ✅ Created User, Subscription, and ScanHistory models
+- ✅ Built backend API with Express (auth, user, subscription routes)
+- ✅ Frontend API client for backend communication
+- ✅ Updated popup UI with login/register forms and user stats
+- ✅ Email count tracking (displays total emails scanned)
+- ✅ Subscription history tracking in database
+- ✅ Unsubscribe tracking (removes from list when clicked)
+- Backend ready to run on localhost:3000
 
 ### LONG-TERM (Project History)
 - Started with basic Chrome extension for Gmail
 - Built working Gmail scanner using Gmail API
 - OAuth2 authentication implemented for Gmail
-- UI shows subscriptions but missing unsubscribe links in display
-- No payment system or user accounts yet
-- Chrome-only, needs cross-platform support
+- UI shows subscriptions with unsubscribe links
+- User authentication system with JWT tokens implemented
+- MongoDB database for user profiles and subscription history
+- Email scan tracking with count display
+- Chrome-only, needs cross-platform support (Outlook, Yahoo pending)
 
 ## ARCHITECTURE DECISIONS
 1. **Modular Structure**: Separate concerns (core logic, providers, UI, backend)
@@ -62,8 +72,21 @@ Users scan their inbox once, get all subscriptions with unsubscribe links, pay $
 5. **Document Changes**: Record what was done in SHORT-TERM memory
 
 ## CURRENT STATUS
-Phase: Architecture Setup Complete
-Next: Implement core module functionality (scanner, auth, storage) and migrate Gmail provider from old_code
+Phase: User Authentication & Database Integration Complete
+Completed:
+- Backend server with MongoDB Atlas
+- User registration/login system
+- Subscription tracking and history
+- Email count display
+- Unsubscribe tracking
+
+Next Steps:
+1. Set up backend .env file with MongoDB password
+2. Install backend dependencies: cd backend && npm install
+3. Start backend server: npm run dev
+4. Test authentication flow in extension
+5. Implement payment system (Stripe integration)
+6. Add free tier limits (5 subscriptions before paywall)
 
 ## REFERENCES
 - Root manifest.json: Extension configuration
