@@ -2,7 +2,7 @@
 
 ## Complete Folder Tree
 
-```
+```text
 mail-sub-extension/
 ├── .windsurf                    # Root context: goals, memory, progress
 ├── .gitignore                   # Git ignore rules
@@ -132,7 +132,7 @@ Every module has a `.windsurf` file that contains:
 
 ### Context Hierarchy
 
-```
+```text
 Root (.windsurf)
 ├── src/ (.windsurf)
 │   ├── core/ (.windsurf)

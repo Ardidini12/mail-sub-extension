@@ -62,8 +62,8 @@ Users scan their inbox once, get all subscriptions with unsubscribe links, pay $
 5. **Document Changes**: Record what was done in SHORT-TERM memory
 
 ## CURRENT STATUS
-Phase: Initial Architecture Setup
-Next: Create folder structure and module-level .windsurf files
+Phase: Architecture Setup Complete
+Next: Implement core module functionality (scanner, auth, storage) and migrate Gmail provider from old_code
 
 ## REFERENCES
 - Root manifest.json: Extension configuration

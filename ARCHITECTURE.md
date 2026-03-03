@@ -12,13 +12,18 @@ This document describes the architectural decisions and structure of the Mail Su
 
 ### 2. Provider Pattern
 Each email provider (Gmail, Outlook, Yahoo) implements the same interface:
-```javascript
+```typescript
 interface EmailProvider {
-  authenticate(): Promise<token>
-  searchEmails(query): Promise<emails[]>
-  getEmailDetails(emailId): Promise<emailData>
-  extractUnsubscribeLink(email): string|null
+  authenticate(): Promise<string>  // Returns auth token
+  searchEmails(query: string): Promise<Email[]>  // Returns array of email objects
+  getEmailDetails(emailId: string): Promise<EmailDetails>  // Returns full email data
+  extractUnsubscribeLink(email: Email): string | null  // Returns unsubscribe URL or null
 }
+
+// Supporting types:
+// - Email: { id: string, snippet: string, ... }
+// - EmailDetails: { id: string, headers: Header[], payload: any, ... }
+// - Header: { name: string, value: string }
 ```
 
 ### 3. Modular Structure
@@ -83,7 +88,7 @@ Each module is self-contained with:
 ### Frontend
 - No sensitive data in localStorage
 - OAuth2 for email provider authentication
-- JWT tokens in chrome.storage (encrypted)
+- JWT tokens stored in `chrome.storage`; encrypt sensitive tokens at the application layer if required
 - Content Security Policy in manifest
 
 ### Backend
