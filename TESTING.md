@@ -63,7 +63,7 @@
 
 ## Architecture
 
-```
+```text
 Extension Flow:
 1. User clicks "Scan Inbox"
 2. popup.js → scanner.js → GmailProvider
@@ -120,7 +120,7 @@ Extension Flow:
 
 ## File Structure
 
-```
+```text
 src/
 ├── core/
 │   ├── scanner.js          # Main scanning orchestrator

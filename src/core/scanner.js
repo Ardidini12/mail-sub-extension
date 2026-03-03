@@ -26,16 +26,17 @@ export class EmailScanner {
       const provider = this.getProvider();
       
       const subscriptions = await provider.scanForSubscriptions(options);
+      const timestamp = Date.now();
       
       await this.storage.saveSubscriptions(subscriptions);
-      await this.storage.setScanTimestamp(Date.now());
+      await this.storage.setScanTimestamp(timestamp);
       
       return {
         success: true,
         subscriptions,
         count: subscriptions.length,
         provider: this.currentProvider,
-        timestamp: Date.now()
+        timestamp
       };
     } catch (error) {
       console.error('Scan error:', error);

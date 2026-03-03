@@ -23,31 +23,57 @@ export class GmailProvider extends BaseEmailProvider {
   async searchEmails(query, token, maxResults = 50) {
     const url = `${this.apiBase}/users/me/messages?q=${encodeURIComponent(query)}&maxResults=${maxResults}`;
     
-    const response = await fetch(url, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+    
+    try {
+      const response = await fetch(url, {
+        headers: { Authorization: `Bearer ${token}` },
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
 
-    if (!response.ok) {
-      const body = await response.text();
-      throw new Error(`Gmail API search error: ${response.status} ${response.statusText} - ${body}`);
+      if (!response.ok) {
+        const body = await response.text();
+        throw new Error(`Gmail API search error: ${response.status} ${response.statusText} - ${body}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      clearTimeout(timeoutId);
+      if (error.name === 'AbortError') {
+        throw new Error('Gmail API request timed out');
+      }
+      throw error;
     }
-
-    return await response.json();
   }
 
   async getEmailDetails(emailId, token) {
     const url = `${this.apiBase}/users/me/messages/${emailId}`;
     
-    const response = await fetch(url, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000);
+    
+    try {
+      const response = await fetch(url, {
+        headers: { Authorization: `Bearer ${token}` },
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
 
-    if (!response.ok) {
-      const body = await response.text();
-      throw new Error(`Gmail API details error: ${response.status} ${response.statusText} - ${body}`);
+      if (!response.ok) {
+        const body = await response.text();
+        throw new Error(`Gmail API details error: ${response.status} ${response.statusText} - ${body}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      clearTimeout(timeoutId);
+      if (error.name === 'AbortError') {
+        throw new Error('Gmail API request timed out');
+      }
+      throw error;
     }
-
-    return await response.json();
   }
 
   extractUnsubscribeLink(headers) {
@@ -55,7 +81,7 @@ export class GmailProvider extends BaseEmailProvider {
       return null;
     }
 
-    const unsubHeader = headers.find(h => h.name === 'List-Unsubscribe');
+    const unsubHeader = headers.find(h => h.name && h.name.toLowerCase() === 'list-unsubscribe');
     
     if (!unsubHeader || !unsubHeader.value) {
       return null;

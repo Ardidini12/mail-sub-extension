@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,7 +18,7 @@
         <span class="btn-text">Scan Inbox</span>
         <span class="btn-loader" style="display: none;">⏳ Scanning...</span>
       </button>
-      <div id="scan-info" class="scan-info"></div>
+      <div id="scan-info" class="scan-info" aria-live="polite" aria-atomic="true" role="status"></div>
     </div>
 
     <div id="results-section" class="results-section" style="display: none;">
