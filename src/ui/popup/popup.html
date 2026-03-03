@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mail Subscription Manager</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>📧 Subscription Manager</h1>
+      <p class="subtitle">Manage your email subscriptions</p>
+    </header>
+
+    <div class="scan-section">
+      <button id="scan-btn" class="btn-primary">
+        <span class="btn-text">Scan Inbox</span>
+        <span class="btn-loader" style="display: none;">⏳ Scanning...</span>
+      </button>
+      <div id="scan-info" class="scan-info"></div>
+    </div>
+
+    <div id="results-section" class="results-section" style="display: none;">
+      <div class="results-header">
+        <h2>Found <span id="sub-count">0</span> Subscriptions</h2>
+      </div>
+      <div id="sub-list" class="sub-list"></div>
+    </div>
+
+    <div id="empty-state" class="empty-state">
+      <p>👆 Click "Scan Inbox" to find your email subscriptions</p>
+    </div>
+
+    <div id="error-state" class="error-state" style="display: none;">
+      <p class="error-message"></p>
+      <button id="retry-btn" class="btn-secondary">Try Again</button>
+    </div>
+  </div>
+
+  <script src="popup.js" type="module"></script>
+</body>
+</html>
