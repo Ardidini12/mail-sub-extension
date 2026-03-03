@@ -1,0 +1,39 @@
+# Popup UI Module
+
+## PURPOSE
+Main popup window that appears when user clicks extension icon.
+Primary interface for scanning inbox and viewing subscriptions.
+
+## CONTAINS
+- popup.html: Main popup HTML structure
+- popup.js: Popup logic and event handlers
+- popup.css: Popup-specific styles
+
+## FEATURES
+- Scan button to trigger inbox scan
+- Subscription list display
+- Unsubscribe link buttons
+- Authentication status
+- Payment prompt (after 5 free subs)
+- Loading states
+- Error messages
+
+## UI FLOW
+1. User opens popup
+2. Check if authenticated -> show login if not
+3. Check payment status
+4. Show scan button
+5. On scan: show loading -> display results
+6. If >5 subs and not paid: show payment prompt
+7. Display unsubscribe links for each subscription
+
+## REFERENCES
+- Parent: /src/ui/.windsurf
+- Root: /.windsurf
+- Uses: /src/core/*, /src/api/*
+
+## RULES
+- Keep popup lightweight (fast load time)
+- Show clear CTAs (Call To Action)
+- Handle offline state gracefully
+- Provide feedback for all user actions

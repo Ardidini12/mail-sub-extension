@@ -1,0 +1,42 @@
+# Backend Server Module
+
+## PURPOSE
+Node.js/Express server for user management, payment processing, and data persistence.
+Provides REST API for extension to manage accounts, payments, and subscription tracking.
+
+## STRUCTURE
+- /routes: API endpoint handlers
+- /models: Database schemas and models
+- /middleware: Auth, validation, error handling
+- /config: Configuration files
+- /utils: Helper functions
+
+## CONTAINS
+- server.js: Main Express application
+- Database connection setup
+- API routes for users, payments, subscriptions
+- Authentication middleware (JWT)
+- Payment integration (Stripe)
+
+## RESPONSIBILITIES
+- User registration and authentication
+- JWT token generation and validation
+- Payment processing ($5 lifetime access)
+- Track user payment status and run count
+- Store user subscription data
+- Enforce free tier limits (5 subs)
+- Rate limiting and security
+
+## REFERENCES
+- Parent: /.windsurf (root context)
+- Called by: /src/api/* (frontend API client)
+- Modules: /backend/routes/.windsurf, /backend/models/.windsurf
+
+## RULES
+- Use environment variables for secrets
+- Validate all inputs
+- Use HTTPS only in production
+- Implement proper error handling
+- Log all payment transactions
+- Secure JWT tokens with strong secrets
+- Use bcrypt for password hashing

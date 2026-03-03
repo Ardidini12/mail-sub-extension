@@ -1,0 +1,29 @@
+# Assets Module
+
+## PURPOSE
+Static assets for the extension (icons, images, fonts).
+
+## CONTAINS
+- /icons: Extension icons in multiple sizes
+  - icon16.png (16x16)
+  - icon32.png (32x32)
+  - icon48.png (48x48)
+  - icon128.png (128x128)
+- /images: UI images and graphics
+- /fonts: Custom fonts (if needed)
+
+## ICON REQUIREMENTS
+- Must provide multiple sizes for different contexts
+- Use transparent backgrounds
+- Follow browser extension icon guidelines
+- Optimize file sizes
+
+## REFERENCES
+- Parent: /.windsurf (root context)
+- Used by: manifest.json, /src/ui/*
+
+## RULES
+- Optimize all images for web
+- Use SVG where possible for scalability
+- Keep total asset size minimal
+- Follow brand guidelines

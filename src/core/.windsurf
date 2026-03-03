@@ -1,0 +1,29 @@
+# Core Business Logic Module
+
+## PURPOSE
+Platform-agnostic core functionality that doesn't depend on specific email providers.
+Contains reusable logic for scanning, authentication, and data management.
+
+## CONTAINS
+- scanner.js: Abstract email scanning orchestrator
+- auth.js: Authentication state management
+- storage.js: Local storage wrapper (Chrome Storage API)
+- subscription.js: Subscription data models and utilities
+
+## RESPONSIBILITIES
+- Coordinate email scanning across different providers
+- Manage authentication tokens and user sessions
+- Handle local data persistence
+- Parse and normalize subscription data
+- Enforce business rules (free tier limits, deduplication)
+
+## REFERENCES
+- Parent: /src/.windsurf
+- Root: /.windsurf
+- Uses: /src/providers/* for provider-specific implementations
+
+## RULES
+- Must not contain provider-specific code
+- All functions should be pure and testable
+- Use dependency injection for provider implementations
+- Handle errors gracefully with meaningful messages

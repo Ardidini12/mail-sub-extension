@@ -1,0 +1,40 @@
+# Backend Middleware Module
+
+## PURPOSE
+Express middleware for authentication, validation, and error handling.
+Reusable middleware functions for request processing.
+
+## CONTAINS
+- auth.js: JWT authentication middleware
+- validate.js: Request validation middleware
+- errorHandler.js: Global error handler
+- rateLimiter.js: Rate limiting middleware
+
+## AUTH MIDDLEWARE
+- verifyToken(): Validate JWT token from Authorization header
+- requireAuth(): Ensure user is authenticated
+- requirePaid(): Ensure user has paid for premium access
+
+## VALIDATION MIDDLEWARE
+- validateRegister(): Validate registration data
+- validateLogin(): Validate login credentials
+- validatePayment(): Validate payment data
+
+## ERROR HANDLER
+- Catch all errors from routes
+- Return consistent error format
+- Log errors for debugging
+- Hide sensitive info in production
+
+## REFERENCES
+- Parent: /backend/.windsurf
+- Root: /.windsurf
+- Used by: /backend/routes/*
+
+## RULES
+- Always validate JWT signature
+- Return 401 for authentication failures
+- Return 403 for authorization failures
+- Return 400 for validation errors
+- Log all authentication attempts
+- Implement rate limiting on auth routes

@@ -1,0 +1,33 @@
+# Shared Styles Module
+
+## PURPOSE
+Global CSS styles and variables shared across the extension UI.
+
+## CONTAINS
+- global.css: Global styles and resets
+- variables.css: CSS custom properties (colors, spacing, fonts)
+- utilities.css: Utility classes
+
+## STYLE GUIDELINES
+- Use CSS custom properties for theming
+- Follow BEM naming convention
+- Mobile-first responsive design
+- Consistent spacing scale
+- Accessible color contrast ratios
+
+## COLOR SCHEME
+- Primary: Extension brand color
+- Success: Green for positive actions
+- Danger: Red for destructive actions (unsubscribe)
+- Neutral: Grays for text and backgrounds
+
+## REFERENCES
+- Parent: /src/ui/.windsurf
+- Root: /.windsurf
+- Used by: All UI components
+
+## RULES
+- Maintain WCAG AA accessibility standards
+- Use rem units for scalability
+- Avoid !important unless necessary
+- Keep specificity low

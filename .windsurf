@@ -1,0 +1,71 @@
+# Mail Subscription Manager - Root Context
+
+## PROJECT OVERVIEW
+Cross-platform browser extension for managing email subscriptions across Gmail, Outlook, Yahoo, etc.
+Users scan their inbox once, get all subscriptions with unsubscribe links, pay $5 for lifetime unlimited access.
+
+## GOALS
+- [ ] Build cross-platform extension (Chrome, Firefox, Edge, Safari)
+- [ ] Implement user authentication system
+- [ ] Integrate payment gateway ($5 lifetime access)
+- [ ] Support multiple email providers (Gmail, Outlook, Yahoo)
+- [ ] Free tier: first 5 subscriptions, then paywall
+- [ ] Display unsubscribe links for each subscription
+- [ ] Backend API for user management and payment tracking
+- [ ] Scalable, maintainable architecture
+
+## MEMORY
+
+### SHORT-TERM (Current Session)
+- Created scalable folder structure with modular organization
+- Old Chrome-only code moved to /old folder
+- Setting up .windsurf context files at each module level
+- Focus: Architecture and scaffolding phase
+
+### LONG-TERM (Project History)
+- Started with basic Chrome extension for Gmail
+- Built working Gmail scanner using Gmail API
+- OAuth2 authentication implemented for Gmail
+- UI shows subscriptions but missing unsubscribe links in display
+- No payment system or user accounts yet
+- Chrome-only, needs cross-platform support
+
+## ARCHITECTURE DECISIONS
+1. **Modular Structure**: Separate concerns (core logic, providers, UI, backend)
+2. **Provider Pattern**: Abstract email providers for multi-platform support
+3. **Backend Required**: Node.js API for user accounts, payments, run tracking
+4. **Storage Strategy**: Chrome Storage API (local) + Backend DB (persistent)
+5. **Payment**: Stripe integration for one-time $5 payment
+6. **Auth**: JWT tokens for user sessions
+
+## PROJECT STRUCTURE
+```
+/src              - Frontend extension code
+  /core           - Business logic (scanner, auth, storage)
+  /providers      - Email provider adapters (Gmail, Outlook, Yahoo)
+  /ui             - User interface components
+  /background     - Service worker
+  /api            - Backend API client
+/backend          - Server-side Node.js application
+  /routes         - API endpoints
+  /models         - Database models
+  /middleware     - Auth, validation, etc.
+/assets           - Icons, images
+/old              - Legacy code (DO NOT MODIFY)
+```
+
+## WORKFLOW
+1. **Check Memory**: Read this file and relevant module .windsurf files
+2. **Analyze Context**: Understand current state and what needs to be done
+3. **Execute Task**: Implement features following architecture rules
+4. **Update Progress**: Check off completed goals, update memory
+5. **Document Changes**: Record what was done in SHORT-TERM memory
+
+## CURRENT STATUS
+Phase: Initial Architecture Setup
+Next: Create folder structure and module-level .windsurf files
+
+## REFERENCES
+- Root manifest.json: Extension configuration
+- /src/.windsurf: Frontend module context
+- /backend/.windsurf: Backend module context

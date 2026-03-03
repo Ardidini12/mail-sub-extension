@@ -1,0 +1,31 @@
+# Backend Configuration Module
+
+## PURPOSE
+Configuration files for database, environment variables, and app settings.
+
+## CONTAINS
+- database.js: Database connection configuration
+- stripe.js: Stripe API configuration
+- jwt.js: JWT token configuration
+- env.example: Example environment variables
+
+## ENVIRONMENT VARIABLES
+- NODE_ENV: development | production
+- PORT: Server port (default: 3000)
+- DATABASE_URL: MongoDB/PostgreSQL connection string
+- JWT_SECRET: Secret key for JWT signing
+- JWT_EXPIRE: Token expiration time
+- STRIPE_SECRET_KEY: Stripe secret key
+- STRIPE_WEBHOOK_SECRET: Stripe webhook secret
+- FRONTEND_URL: Extension URL for CORS
+
+## REFERENCES
+- Parent: /backend/.windsurf
+- Root: /.windsurf
+- Used by: /backend/server.js, /backend/routes/*
+
+## RULES
+- Never commit .env file to git
+- Use strong random secrets
+- Different configs for dev/prod
+- Validate all env vars on startup

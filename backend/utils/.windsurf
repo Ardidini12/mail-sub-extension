@@ -1,0 +1,28 @@
+# Backend Utilities Module
+
+## PURPOSE
+Helper functions and utilities used across backend.
+
+## CONTAINS
+- logger.js: Logging utility (Winston/Pino)
+- emailValidator.js: Email validation helper
+- tokenGenerator.js: JWT token generation
+- errorFormatter.js: Error response formatter
+
+## UTILITIES
+- Log requests and errors
+- Validate email formats
+- Generate secure tokens
+- Format consistent API responses
+- Handle async errors
+
+## REFERENCES
+- Parent: /backend/.windsurf
+- Root: /.windsurf
+- Used by: /backend/routes/*, /backend/middleware/*
+
+## RULES
+- Keep utilities pure and testable
+- No side effects in helper functions
+- Proper error handling
+- Document function parameters
