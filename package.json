@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Cross-platform browser extension for managing email subscriptions",
   "scripts": {
-    "dev": "npm run dev:extension & npm run dev:backend",
+    "dev": "concurrently \"npm run dev:extension\" \"npm run dev:backend\"",
     "dev:extension": "echo Extension development mode",
     "dev:backend": "cd backend && npm run dev",
     "build": "npm run build:extension",
@@ -23,7 +23,11 @@
   ],
   "author": "",
   "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
   "devDependencies": {
+    "concurrently": "^8.2.2",
     "eslint": "^8.0.0",
     "prettier": "^3.0.0"
   }

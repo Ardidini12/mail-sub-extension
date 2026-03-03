@@ -32,20 +32,30 @@ function parseUnsubscribeHeader(headerValue) {
   // Header usually looks like: <https://example.com/unsub>, <mailto:unsub@example.com>
   // We want the http/https link.
   
+  // Helper to validate URL
+  const isValidHttpUrl = (str) => {
+    try {
+      const url = new URL(str);
+      return url.protocol === 'http:' || url.protocol === 'https:';
+    } catch {
+      return false;
+    }
+  };
+  
   // Regex to capture content inside < >
   const matches = headerValue.match(/<([^>]+)>/g);
   
   if (matches) {
     for (const match of matches) {
       const url = match.slice(1, -1); // remove < >
-      if (url.startsWith('http')) {
+      if (isValidHttpUrl(url)) {
         return url;
       }
     }
   }
   
-  // Fallback: strictly check if the whole string is a slightly malformed http link (rare but possible)
-  if (headerValue.startsWith('http')) {
+  // Fallback: strictly check if the whole string is a valid http/https URL
+  if (isValidHttpUrl(headerValue)) {
     return headerValue;
   }
 
@@ -102,7 +112,7 @@ export async function scanForSubscriptions() {
             // clean up sender name
             const rawFrom = fromHeader ? fromHeader.value : 'Unknown';
             const senderName = rawFrom.split('<')[0].trim().replace(/"/g, '');
-            const senderEmail = rawFrom.match(/<(.*)>/)?.[1] || rawFrom;
+            const senderEmail = rawFrom.match(/<([^>]+)>/)?.[1] || rawFrom;
 
             // DEDUPLICATION: Only process if we haven't seen this sender yet
             if (!uniqueSubs.has(senderName)) {

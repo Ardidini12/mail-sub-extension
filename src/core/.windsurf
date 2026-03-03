@@ -1,13 +1,13 @@
 # Core Business Logic Module
 
 ## PURPOSE
-Platform-agnostic core functionality that doesn't depend on specific email providers.
+Platform-agnostic core functionality that doesn't depend on specific email providers or browser APIs.
 Contains reusable logic for scanning, authentication, and data management.
 
 ## CONTAINS
 - scanner.js: Abstract email scanning orchestrator
 - auth.js: Authentication state management
-- storage.js: Local storage wrapper (Chrome Storage API)
+- storage.js: StorageAdapter interface (platform-neutral contract; browser-specific implementations injected at runtime)
 - subscription.js: Subscription data models and utilities
 
 ## RESPONSIBILITIES
@@ -24,6 +24,7 @@ Contains reusable logic for scanning, authentication, and data management.
 
 ## RULES
 - Must not contain provider-specific code
-- All functions should be pure and testable
-- Use dependency injection for provider implementations
-- Handle errors gracefully with meaningful messages
+- Domain logic must be pure and testable; side effects (auth, storage, I/O) isolated in boundary adapters (AuthAdapter, StorageService, SessionStore) injected via dependency injection
+- Use dependency injection for provider implementations and adapters
+- Handle errors gracefully with meaningful messages in adapter boundaries
+- Adapters must implement explicit interfaces for testability
